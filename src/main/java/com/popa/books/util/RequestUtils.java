@@ -1,18 +1,16 @@
 package com.popa.books.util;
 
-import java.io.*;
-import java.sql.Date;
-import java.text.SimpleDateFormat;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
-
-import org.apache.commons.io.IOUtils;
-
-import org.apache.commons.lang.StringUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import java.io.*;
+import java.sql.Date;
+import java.text.SimpleDateFormat;
 
 public class RequestUtils {
 
@@ -22,7 +20,7 @@ public class RequestUtils {
         String contentType = request.getContentType();
         String eventValue = null;
         try {
-            if (contentType != null && (contentType.indexOf(FormKeys.MULTI_PART_FORM_CONTENT_TYPE) != -1 || contentType.indexOf(FormKeys.MULTI_PART_MIXED_STREAM) != -1)) {
+            if (contentType != null && (contentType.contains(FormKeys.MULTI_PART_FORM_CONTENT_TYPE) || contentType.contains(FormKeys.MULTI_PART_MIXED_STREAM))) {
                 Part part = request.getPart(parameterName);
                 if (part == null) { // checkboxes that are unchecked
                     return null;
@@ -47,7 +45,7 @@ public class RequestUtils {
         try {
             if (contentType == null) {
                 eventValue = request.getParameter(parameterName).getBytes();
-            } else if (contentType.indexOf(FormKeys.MULTI_PART_FORM_CONTENT_TYPE) != -1 || contentType.indexOf(FormKeys.MULTI_PART_MIXED_STREAM) != -1) {
+            } else if (contentType.contains(FormKeys.MULTI_PART_FORM_CONTENT_TYPE) || contentType.contains(FormKeys.MULTI_PART_MIXED_STREAM)) {
                 Part part = request.getPart(parameterName);
                 if (part == null) { // checkboxes that are unchecked
                     return null;

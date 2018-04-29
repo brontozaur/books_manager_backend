@@ -1,8 +1,7 @@
 package com.popa.books.model;
 
-import java.io.Serializable;
-
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "book_cover")

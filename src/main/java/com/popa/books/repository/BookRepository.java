@@ -18,6 +18,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     /**
      * Not used, just for amazing amusement ;-)
+     *
      * @param title
      * @return
      */
@@ -25,6 +26,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     /**
      * Gets the books with no title
+     *
      * @param pageable
      * @return
      */
@@ -32,6 +34,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     /**
      * Gets the books that starts with the <code>title</code> string
+     *
      * @param pageable
      * @param title
      * @return
@@ -40,6 +43,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     /**
      * Gets books with no author
+     *
      * @param pageable
      * @return
      */
@@ -47,6 +51,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     /**
      * Gets books with a specific author
+     *
      * @param pageable
      * @param authorId
      * @return
@@ -55,6 +60,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     /**
      * Gets books with no editura
+     *
      * @param pageable
      * @return
      */
@@ -62,6 +68,7 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     /**
      * Gets books with a specific editura
+     *
      * @param pageable
      * @param idEditura
      * @return
@@ -70,18 +77,21 @@ public interface BookRepository extends JpaRepository<Book, Long> {
 
     /**
      * Counts the books with no author. Used only to display the book count on the ui
+     *
      * @return
      */
     Long countByAuthorIsNull();
 
     /**
      * Counts the books with no editura. Used only to display the book count on the ui
+     *
      * @return
      */
     Long countByEdituraIsNull();
 
     /**
      * Counts the books with no title. Used only to display the book count on the ui
+     *
      * @return
      */
     Long countByTitleIsNull();
@@ -90,7 +100,8 @@ public interface BookRepository extends JpaRepository<Book, Long> {
      * Ugly query that groups the books based on the first letter of their title, each letter having a book count
      */
     String NATIVE_QUERY = "select distinct(substring(b.title, 1,1)), (select count(1) from book b1 where substring(b1.title, 1,1) = substring(b.title, 1,1)) " +
-        "FROM book b WHERE b.title IS NOT NULL AND (select count(1) from book b1 where substring(b1.title, 1,1) = substring(b.title, 1,1)) >0";
+            "FROM book b WHERE b.title IS NOT NULL AND (select count(1) from book b1 where substring(b1.title, 1,1) = substring(b.title, 1,1)) >0";
+
     @Query(value = NATIVE_QUERY, nativeQuery = true)
     List<Object[]> findBooksAndCount();
 

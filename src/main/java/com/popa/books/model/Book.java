@@ -1,8 +1,7 @@
 package com.popa.books.model;
 
-import java.io.Serializable;
-
 import javax.persistence.*;
+import java.io.Serializable;
 
 @Entity
 @Table(name = "book")
@@ -36,7 +35,7 @@ public class Book implements Serializable {
     @Column(name = "isbn", nullable = true)
     private String isbn;
 
-    @Column(name = "citita", nullable = true, columnDefinition="BIT")
+    @Column(name = "citita", nullable = true, columnDefinition = "BIT")
     private Boolean citita;
 
     @Column(name = "serie", nullable = true)

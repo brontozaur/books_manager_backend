@@ -3,7 +3,6 @@ package com.popa.books.config;
 import com.popa.books.model.api.JsonErrorDescriptor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.web.ErrorAttributes;
 import org.springframework.boot.autoconfigure.web.ErrorController;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,11 +31,13 @@ public class CustomErrorController implements ErrorController {
 
     private static final String PATH = "/error";
 
-    @Autowired
-    private BooksApplicationProperties props;
+    private final BooksApplicationProperties props;
+    private final ErrorAttributes errorAttributes;
 
-    @Autowired
-    private ErrorAttributes errorAttributes;
+    public CustomErrorController(BooksApplicationProperties props, ErrorAttributes errorAttributes) {
+        this.props = props;
+        this.errorAttributes = errorAttributes;
+    }
 
     @Override
     public String getErrorPath() {

@@ -1,6 +1,5 @@
 package com.popa.books.controller;
 
-import com.popa.books.config.BooksApplicationProperties;
 import com.popa.books.model.Book;
 import com.popa.books.model.BookCover;
 import com.popa.books.model.api.BookDTO;
@@ -10,12 +9,10 @@ import com.popa.books.repository.AutorRepository;
 import com.popa.books.repository.BookRepository;
 import com.popa.books.repository.CategorieRepository;
 import com.popa.books.repository.EdituraRepository;
-import com.popa.books.util.RequestUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.math.RandomUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -40,20 +37,20 @@ public class BookController {
     public static final String SEARCH_TYPE_EDITURI_TREE = "treeEdituri";
     public static final String SEARCH_TYPE_GRID = "grid";
 
-    @Autowired
     private BookRepository repository;
-
-    @Autowired
     private AutorRepository autorRepository;
-
-    @Autowired
     private CategorieRepository categorieRepository;
-
-    @Autowired
     private EdituraRepository edituraRepository;
 
-    @Autowired
-    private BooksApplicationProperties props;
+    public BookController(BookRepository repository,
+                          AutorRepository autorRepository,
+                          CategorieRepository categorieRepository,
+                          EdituraRepository edituraRepository) {
+        this.repository = repository;
+        this.autorRepository = autorRepository;
+        this.categorieRepository = categorieRepository;
+        this.edituraRepository = edituraRepository;
+    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Book getBook(@PathVariable Long id) {
@@ -61,10 +58,10 @@ public class BookController {
     }
 
     /**
-     * @param currentPage current page, starting with 1
-     * @param pageSize number of records per page
+     * @param currentPage  current page, starting with 1
+     * @param pageSize     number of records per page
      * @param filterValue: first letter of the book, autor id, editura id or root name (ignored in this case
-     * @param searchType: SEARCH_TYPE_AUTORI_TREE, SEARCH_TYPE_BOOKS_TREE, SEARCH_TYPE_EDITURI_TREE, SEARCH_TYPE_GRID
+     * @param searchType:  SEARCH_TYPE_AUTORI_TREE, SEARCH_TYPE_BOOKS_TREE, SEARCH_TYPE_EDITURI_TREE, SEARCH_TYPE_GRID
      * @return
      * @throws ServletException
      */

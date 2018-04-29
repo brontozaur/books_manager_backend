@@ -6,7 +6,6 @@ import com.popa.books.model.node.Node;
 import com.popa.books.model.node.NodeSQL;
 import com.popa.books.repository.AutorRepository;
 import com.popa.books.repository.BookRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
@@ -21,11 +20,13 @@ import java.util.List;
 @RequestMapping("/autor")
 public class AutorController {
 
-    @Autowired
     private AutorRepository repository;
-
-    @Autowired
     private BookRepository bookRepository;
+
+    public AutorController(AutorRepository repository, BookRepository bookRepository) {
+        this.repository = repository;
+        this.bookRepository = bookRepository;
+    }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_UTF8_VALUE)
     public Autor getAutor(@PathVariable Long id) {
